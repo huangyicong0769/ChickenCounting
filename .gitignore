@@ -1,0 +1,7 @@
+data/
+ChickenCounting/
+ChickenCounting yolov8s_MCA_AConv_C2PSA_GD_FreqFusion/
+result/
+runs/
+wandb/
+*.pt
