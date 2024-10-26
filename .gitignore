@@ -5,3 +5,4 @@ result/
 runs/
 wandb/
 *.pt
+.vscode/settings.json
