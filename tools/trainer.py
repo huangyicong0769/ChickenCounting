@@ -3,7 +3,7 @@
 from ultralytics import YOLO
 
 def main():
-    for model_type in ["yolov8s_LSKMCA_C2INXB_GD",]:
+    for model_type in ["yolov8s_MCA_C2INXB_LSKGD_ii",]:
         print(f"Training {model_type}:")
 
         model = YOLO(model_type+".yaml")
