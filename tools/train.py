@@ -38,7 +38,7 @@ params={
 }
 
 def main():
-    for model_type in ["yolov8s_MCA_C2INXB_StarGD", "yolov8s_C2fS_C2INXB_GD", "yolov8s_C2fS_MCA_C2INXB_GD"]:
+    for model_type in []:
         print(f"Training {model_type}:")
         model = YOLO(model_type+".yaml")
         params['name'] = f"{model_type}_"
@@ -75,6 +75,21 @@ def main():
                     mosaic=params['mosaic'],
                     mixup=params['mixup'],
                     copy_paste=params['copy_paste'],)
+    
+    #no tune
+    for model_type in ["yolov8s_C2fS_C2INXB_GD", "yolov8s_C2fS_MCA_C2INXB_GD"]:
+        print(f"Training {model_type}:")
+        model = YOLO(model_type+".yaml")
+        params['name'] = f"{model_type}_nt_"
+        params['pretrained'] = False
+        model.train(data=params['data'],
+                    epochs=params['epochs'],
+                    batch=params['batch'],
+                    cache=params['cache'],
+                    project=params['project'],
+                    name=params['name'],
+                    pretrained=params['pretrained'],
+                    plots=params['plots'],)
     
     #for pretrianed
     for model_type in []:
