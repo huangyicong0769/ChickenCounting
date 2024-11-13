@@ -201,7 +201,7 @@ def visualize(bbox_list, img, save_path):
         return mask
     
     # Process each bbox entry
-    for i, entry in tqdm(enumerate(bbox_list)):
+    for i, entry in enumerate(bbox_list):
         image = backup.copy()
 
         # Calculate transparency based on confidence
@@ -301,7 +301,7 @@ def main(args):
     except Exception as e:
         raise Exception(f"Failed to create directory {args.output}: {str(e)}")
 
-    for img in os.listdir(img_dir):
+    for img in tqdm(os.listdir(img_dir)):
         if not img.endswith(args.img_ext):
             continue
         lbl = os.path.join(lbl_dir, os.path.splitext(img)[0] + '.txt')

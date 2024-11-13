@@ -9,6 +9,7 @@ import json
 import shutil
 import numpy as np
 from pathlib import Path
+from tqdm import tqdm
  
 id2cls = {0:'chicken',
           1:'column',
@@ -42,9 +43,9 @@ def yolo2labelme(yolo_image_dir, yolo_label_dir, save_dir='res/'):
     yolo_image_dir = str(Path(yolo_image_dir)) + '/'
     yolo_label_dir = str(Path(yolo_label_dir)) + '/'
     save_dir = str(Path(save_dir)) + '/'
-    image_files = os.listdir(yolo_image_dir)
+    image_files = tqdm(os.listdir(yolo_image_dir))
     for iimgf, imgf in enumerate(image_files):
-        print(iimgf+1, '/', len(image_files), imgf)
+        # print(iimgf+1, '/', len(image_files), imgf)
         fn = imgf.rsplit('.', 1)[0]
         shutil.copy(yolo_image_dir + imgf, save_dir + imgf)
         image = cv2.imread(yolo_image_dir + imgf)
@@ -66,7 +67,7 @@ def yolo2labelme(yolo_image_dir, yolo_label_dir, save_dir='res/'):
     print('Completed!')
  
 if __name__ == '__main__':
-    yolo_image_dir = r'C:\Users\qq260\ChickenCounting\data\train\images'
-    yolo_label_dir = r'C:\Users\qq260\ChickenCounting\data\train\labels'
-    save_dir = r'C:\Users\qq260\ChickenCounting\data\train\labelme'
+    yolo_image_dir = r'C:\Users\qq260\ChickenCounting\data\test\images'
+    yolo_label_dir = r'C:\Users\qq260\ChickenCounting\data\test\labels'
+    save_dir = r'C:\Users\qq260\ChickenCounting\data\test\labelme'
     yolo2labelme(yolo_image_dir, yolo_label_dir, save_dir)
