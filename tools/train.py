@@ -38,7 +38,7 @@ params={
 }
 
 def main():
-    for model_type in ["yolov8s_MCA_C2INXB_StarGD"]:
+    for model_type in ["yolov8s_MCA_C2INXB_StarGD", "yolov8s_C2fS_C2INXB_GD", "yolov8s_C2fS_MCA_C2INXB_GD"]:
         print(f"Training {model_type}:")
         model = YOLO(model_type+".yaml")
         params['name'] = f"{model_type}_"
