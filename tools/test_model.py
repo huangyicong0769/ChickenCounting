@@ -1,11 +1,14 @@
 # from os.path import exists
 
 from ultralytics import YOLO
+import argparse
 
-def main():
-        model_type = "yolov8s_S2fMCA_AConv_C2INXB_GD"
+def main(args):
+        model_type = args.model
         model = YOLO(model_type+".yaml")
         model.train(data='./data/data.yaml', epochs=25, batch=32, cache=True, pretrained=False, save=False, plots=False)
         
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="test model")
+    parser.add_argument("model", type=str, help="model config")
+    main(parser.parse_args())
