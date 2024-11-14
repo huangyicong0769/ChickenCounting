@@ -7,7 +7,7 @@ from ultralytics import YOLO
 params={
     'data': './data/data.yaml',
     'epochs': 350, 
-    'batch': 0.60,
+    'batch': 0.85,
     'cache': True, 
     'project': f'ChickenCounting', 
     'plots': True, 
@@ -38,7 +38,7 @@ params={
 }
 
 def main():
-    for model_type in []:
+    for model_type in ["yolov8s_S2fMCA_AConv_C2INXB_GD"]:
         print(f"Training {model_type}:")
         model = YOLO(model_type+".yaml")
         params['name'] = f"{model_type}_"
@@ -77,7 +77,7 @@ def main():
                     copy_paste=params['copy_paste'],)
     
     #no tune
-    for model_type in ["yolov8s_C2fS_C2INXB_GD", "yolov8s_C2fS_MCA_C2INXB_GD"]:
+    for model_type in []:
         print(f"Training {model_type}:")
         model = YOLO(model_type+".yaml")
         params['name'] = f"{model_type}_nt_"
