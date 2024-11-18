@@ -6,7 +6,7 @@ import argparse
 def main(args):
         model_type = args.model
         model = YOLO(model_type+".yaml")
-        model.train(data='./data/data.yaml', epochs=25, batch=32, cache=True, pretrained=False, save=False, plots=False)
+        model.train(data='./data/data.yaml', epochs=25, batch=32, cache=True, pretrained=False, save=False, plots=False, iou_type='WIoUv2')
         model.val(data='./data/data.yaml')
         
 if __name__ == "__main__":
