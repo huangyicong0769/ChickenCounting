@@ -1,7 +1,7 @@
 from ultralytics import YOLO
 
 def main():
-    for model_type in ["yolov8s_MCWA_AConv_C2INXB_GD"]:
+    for model_type in ["yolov8s_WT_MEEM_MCWA_AConv_C2INXB_GD"]:
         print("Training "+model_type+":")
         model = YOLO(model_type+".yaml")
         model.train(data="coco.yaml", epochs=100, batch=-1, cache=False, project='ChickenCounting', name=model_type+"_100e_coco", plots=False)
