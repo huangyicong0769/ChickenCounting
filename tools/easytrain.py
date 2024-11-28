@@ -12,7 +12,9 @@ meta_params={
     'project': f'ChickenCounting', 
     'plots': True, 
     'patience': 0,
-    'iou_type': 'CIoU'
+    'iou_type': 'CIoU',
+    'close_mosaic': 20,
+    'pretrained': False
 }
 
 hyp_params={
@@ -43,14 +45,13 @@ hyp_params={
 }
 
 def main():
-    model_type = 'yolov8n_MCWA_AConv_C2INXB_GD'
+    model_type = 'yolov8s_MCWA_AConv_C2INXB_GD'
     params = meta_params | hyp_params
-    
+  
     #1
     print(f"Training {model_type}:")
     model = YOLO(model_type+".yaml")
-    params['name'] = f"{model_type}_"
-    params['pretrained'] = True
+    params['name'] = f"{model_type}_PIDAO_ST_"
     model.train(data=params['data'],
                 epochs=params['epochs'],
                 batch=params['batch'],
@@ -60,13 +61,17 @@ def main():
                 pretrained=params['pretrained'],
                 patience=params['patience'],
                 plots=params['plots'],
-                optimizer=params['optimizer'],
+                close_mosaic=params['close_mosaic'],
+                optimizer='PIDAO_ST',
                 lr0=params['lr0'],
                 lrf=params['lrf'],
                 momentum=params['momentum'],
                 weight_decay=params['weight_decay'],
                 warmup_epochs=params['warmup_epochs'],
                 warmup_momentum=params['warmup_momentum'],
+                kp = 1./(params['lr0']*params['momentum']),
+                ki = 0.1,
+                kd = 1.,
                 box=params['box'],
                 cls=params['cls'],
                 dfl=params['dfl'],
@@ -84,6 +89,6 @@ def main():
                 mosaic=params['mosaic'],
                 mixup=params['mixup'],
                 copy_paste=params['copy_paste'],)
-        
+
 if __name__ == "__main__":
     main()

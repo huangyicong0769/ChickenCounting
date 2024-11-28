@@ -9,3 +9,4 @@ wandb/
 *.pt
 .vscode
 scripts/test.py
+yolov8s*/

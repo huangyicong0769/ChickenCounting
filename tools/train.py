@@ -12,7 +12,8 @@ meta_params={
     'cache': True, 
     'project': f'ChickenCounting', 
     'plots': True, 
-    'iou_type': 'CIoU'
+    'iou_type': 'CIoU',
+    'close_mosaic': 20,
 }
 
 hyp_params={
