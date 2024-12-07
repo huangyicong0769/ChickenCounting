@@ -2,19 +2,45 @@
 
 from ultralytics import YOLO
 
-# pretrain = True
-
 meta_params={
     'data': './data/data.yaml',
-    'epochs': 350, 
+    'epochs': 200, 
     'batch': 0.85,
     'cache': True, 
     'project': f'ChickenCounting', 
     'plots': True, 
     'patience': 0,
     'iou_type': 'CIoU',
-    'close_mosaic': 20,
-    'pretrained': False
+    'close_mosaic': 5,
+    'pretrained': False,
+    
+    # Default Hyperparameters
+    'optimizer': 'auto',
+    'lr0': 0.01,
+    'lrf': 0.01,
+    'momentum': 0.937,
+    'weight_decay': 0.0005,
+    'warmup_epochs': 3.0,
+    'warmup_momentum': 0.8,
+    'box': 7.5,
+    'cls': 0.5,
+    'dfl': 1.5,
+    'hsv_h': 0.015,
+    'hsv_s': 0.7,
+    'hsv_v': 0.4,
+    'degrees': 0.0,
+    'translate': 0.1,
+    'scale': 0.5,
+    'shear': 0.0,
+    'perspective': 0.0,
+    'flipud': 0.0,
+    'fliplr': 0.5,
+    'bgr': 0.0,
+    'mosaic': 1.0,
+    'mixup': 0.0,
+    'copy_paste': 0.0,
+    'ki': 575.0,
+    'kd': 50.0,
 }
 
 hyp_params={
@@ -42,6 +68,34 @@ hyp_params={
     'mosaic': 0.82585,
     'mixup': 0.0,
     'copy_paste': 0.0,
+}
+
+hyp_params_WIoUv2={
+    'optimizer': 'AdamW',
+    'lr0': 0.00754,
+    'lrf': 0.01,
+    'momentum': 0.78741,
+    'weight_decay': 0.0004,
+    'warmup_epochs': 3.40158,
+    'warmup_momentum': 0.58766,
+    'box': 8.21054,
+    'cls': 0.71407,
+    'dfl': 1.23987,
+    'hsv_h': 0.01471,
+    'hsv_s': 0.60749,
+    'hsv_v': 0.43685,
+    'degrees': 0.0,
+    'translate': 0.06498,
+    'scale': 0.43362,
+    'shear': 0.0,
+    'perspective': 0.0,
+    'flipud': 0.0,
+    'fliplr': 0.31734,
+    'bgr': 0.0,
+    'mosaic': 1.0,
+    'mixup': 0.0,
+    'copy_paste': 0.0,
+    'iou_type': 'WIoUv2',
 }
 
 hyp_params_SGD={
@@ -239,15 +293,22 @@ hyp_params_PIDAO_AdSI={
     'kd': 0.63658,
 }
 
-def main():
-    model_type = 'yolov8s_MCWA_AConv_C2INXB_GD'
-    params = meta_params | hyp_params_PIDAO_AdSI
+def main(model_type, __debug=None):
+    # model_type = 'yolov8s'
+    # model_type = 'yolov8s_MCWA_AConv_C2INXB_GD'
+    params = meta_params
   
-    #1
     print(f"Training {model_type}:")
-    model = YOLO(model_type+".yaml").load(r"ChickenCounting/yolov8s_MCWA_AConv_C2INXB_GD_100e_coco/weights/last.pt")
-    params['name'] = f"{model_type}_PIDAOadsi_cocopt_"
-    params['pretrained'] = True
+    if params['pretrained'] == False:
+        model = YOLO(model_type+".yaml")
+    else:
+        model = YOLO(model_type+".yaml").load(f"ChickenCounting/{model_type}_100e_coco/weights/last.pt")
+    # params['optimizer'] = 'CAdamW'
+    params['name'] = f"{model_type}_{params['epochs']}e{"_cocopt" if params['pretrained'] else ""}_"
+    
+    if __debug is not None:
+        return params['name']
+        
     model.train(data=params['data'],
                 epochs=params['epochs'],
                 batch=params['batch'],
@@ -258,6 +319,7 @@ def main():
                 patience=params['patience'],
                 plots=params['plots'],
                 close_mosaic=params['close_mosaic'],
+                iou_type=params['iou_type'],
                 optimizer=params['optimizer'],
                 lr0=params['lr0'],
                 lrf=params['lrf'],
@@ -265,7 +327,7 @@ def main():
                 weight_decay=params['weight_decay'],
                 warmup_epochs=params['warmup_epochs'],
                 warmup_momentum=params['warmup_momentum'],
-                # kp = 1./(params['lr0']*params['momentum']),
+                kp = 1./(params['lr0']*params['momentum']),
                 ki = params['ki'],
                 kd = params['kd'],
                 box=params['box'],
@@ -288,51 +350,13 @@ def main():
                 # exist_ok=True,
                 )
 
-    params = meta_params | hyp_params_PIDAO_SI
-    #2
-    print(f"Training {model_type}:")
-    model = YOLO(model_type+".yaml").load(r"ChickenCounting/yolov8s_MCWA_AConv_C2INXB_GD_100e_coco/weights/last.pt")
-    params['name'] = f"{model_type}_PIDAOsi_cocopt_"
-    params['pretrained'] = True
-    model.train(data=params['data'],
-                epochs=params['epochs'],
-                batch=params['batch'],
-                cache=params['cache'],
-                project=params['project'],
-                name=params['name'],
-                pretrained=params['pretrained'],
-                patience=params['patience'],
-                plots=params['plots'],
-                close_mosaic=params['close_mosaic'],
-                optimizer=params['optimizer'],
-                lr0=params['lr0'],
-                lrf=params['lrf'],
-                momentum=params['momentum'],
-                weight_decay=params['weight_decay'],
-                warmup_epochs=params['warmup_epochs'],
-                warmup_momentum=params['warmup_momentum'],
-                # kp = 1./(params['lr0']*params['momentum']),
-                ki = params['ki'],
-                kd = params['kd'],
-                box=params['box'],
-                cls=params['cls'],
-                dfl=params['dfl'],
-                hsv_h=params['hsv_h'],
-                hsv_s=params['hsv_s'],
-                hsv_v=params['hsv_v'],
-                degrees=params['degrees'],
-                translate=params['translate'],
-                scale=params['scale'],
-                shear=params['shear'],
-                perspective=params['perspective'],
-                flipud=params['flipud'],
-                fliplr=params['fliplr'],
-                bgr=params['bgr'],
-                mosaic=params['mosaic'],
-                mixup=params['mixup'],
-                copy_paste=params['copy_paste'],
-                exist_ok=True,
-                )
-
 if __name__ == "__main__":
-    main()
+    failed = []
+    for model in ["yolov8s", "yolov8s_MCWA", "yolov8s_AConv", "yolov8s_C2INXB", "yolov8s_GD", "yolov8s_MCWA_AConv", "yolov8s_MCWA_C2INXB", "yolov8s_MCWA_GD", "yolov8s_AConv_GD", "yolov8s_C2INXB_GD", "yolov8s_MCWA_AConv_C2INXB", "yolov8s_AConv_C2INXB_GD", "yolov8s_MCWA_AConv_C2INXB_GD"]:
+        try:
+            main(model_type=model)
+        except Exception as e:
+            failed.append(f"training {model} failed: {e}")
+            
+    for f in failed:
+        print(f)

@@ -7,6 +7,6 @@ result/
 runs/
 wandb/
 *.pt
-.vscode
+.vscode/
 scripts/test.py
 yolov8s*/

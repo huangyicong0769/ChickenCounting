@@ -33,4 +33,4 @@ space = {  # key: (min, max, gain(optional))
         }
 
 # Tune hyperparameters for 30 epochs
-model.tune(data=r"data/data.yaml", epochs=30, iterations=500, optimizer="PIDAO_AdSI", plots=False, save=False, val=False, space=space)
+model.tune(data=r"data/data.yaml", epochs=120, iterations=500, optimizer="PIDAO_ST", plots=False, save=False, val=False, space=space)
