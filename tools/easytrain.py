@@ -306,7 +306,7 @@ def main(model_type, __debug=None):
     # params['optimizer'] = 'CAdamW'
     params['name'] = f"{model_type}_{params['epochs']}e{"_cocopt" if params['pretrained'] else ""}_"
     
-    if __debug is not None:
+    if __debug == True:
         return params['name']
         
     model.train(data=params['data'],
@@ -347,14 +347,14 @@ def main(model_type, __debug=None):
                 mosaic=params['mosaic'],
                 mixup=params['mixup'],
                 copy_paste=params['copy_paste'],
-                # exist_ok=True,
+                exist_ok=True,
                 )
 
 if __name__ == "__main__":
     failed = []
-    for model in ["yolov8s", "yolov8s_MCWA", "yolov8s_AConv", "yolov8s_C2INXB", "yolov8s_GD", "yolov8s_MCWA_AConv", "yolov8s_MCWA_C2INXB", "yolov8s_MCWA_GD", "yolov8s_AConv_GD", "yolov8s_C2INXB_GD", "yolov8s_MCWA_AConv_C2INXB", "yolov8s_AConv_C2INXB_GD", "yolov8s_MCWA_AConv_C2INXB_GD"]:
+    for model in ["yolov8s_GD_DE"]:
         try:
-            main(model_type=model)
+            main(model_type=model, __debug=None)
         except Exception as e:
             failed.append(f"training {model} failed: {e}")
             
