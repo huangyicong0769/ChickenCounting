@@ -11,7 +11,7 @@ meta_params={
     'plots': True, 
     'patience': 0,
     'iou_type': 'CIoU',
-    'close_mosaic': 5,
+    'close_mosaic': 0,
     'pretrained': False,
     
     # Default Hyperparameters
@@ -352,9 +352,9 @@ def main(model_type, __debug=None):
 
 if __name__ == "__main__":
     failed = []
-    for model in ["yolov8s_GD_DE"]:
+    for model in ["yolov8s_Moga_GD_vi", "yolov8s_Moga_GD_vii", "yolov8s_AConv_GD_FMF", "yolov8s_C2INXB_GD_FMF", "yolov8s_AConv_C2INXB_GD_FMF"]:
         try:
-            main(model_type=model, __debug=None)
+            main(model_type=model, __debug=True)
         except Exception as e:
             failed.append(f"training {model} failed: {e}")
             
