@@ -1,4 +1,5 @@
 # from os.path import exists
+import warnings
 
 from ultralytics import YOLO
 
@@ -351,10 +352,11 @@ def main(model_type, __debug=None):
                 )
 
 if __name__ == "__main__":
+    warnings.filterwarnings("ignore", category=UserWarning)
     failed = []
-    for model in ["yolov8s_Moga_GD_vi", "yolov8s_Moga_GD_vii", "yolov8s_AConv_GD_FMF", "yolov8s_C2INXB_GD_FMF", "yolov8s_AConv_C2INXB_GD_FMF"]:
+    for model in ["yolov8s_GD_DySample_ii", "yolov8s_GD_DySample_iii", "yolov8s_GD_DySample_iv", "yolov8s_C2PSA"]:
         try:
-            main(model_type=model, __debug=True)
+            main(model_type=model, __debug=None)
         except Exception as e:
             failed.append(f"training {model} failed: {e}")
             
