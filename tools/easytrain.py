@@ -295,8 +295,6 @@ hyp_params_PIDAO_AdSI={
 }
 
 def main(model_type, __debug=None):
-    # model_type = 'yolov8s'
-    # model_type = 'yolov8s_MCWA_AConv_C2INXB_GD'
     params = meta_params
   
     print(f"Training {model_type}:")
@@ -348,13 +346,13 @@ def main(model_type, __debug=None):
                 mosaic=params['mosaic'],
                 mixup=params['mixup'],
                 copy_paste=params['copy_paste'],
-                exist_ok=True,
+                # exist_ok=True,
                 )
 
 if __name__ == "__main__":
     warnings.filterwarnings("ignore", category=UserWarning)
     failed = []
-    for model in ["yolov8s_GD_DySample_ii", "yolov8s_GD_DySample_iii", "yolov8s_GD_DySample_iv", "yolov8s_C2PSA"]:
+    for model in ["yolov8s_GD_DySample_v" for _ in range(3)]:
         try:
             main(model_type=model, __debug=None)
         except Exception as e:
