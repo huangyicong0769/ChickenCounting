@@ -346,13 +346,13 @@ def main(model_type, __debug=None):
                 mosaic=params['mosaic'],
                 mixup=params['mixup'],
                 copy_paste=params['copy_paste'],
-                exist_ok=True,
+                # exist_ok=True,
                 )
 
 if __name__ == "__main__":
     warnings.filterwarnings("ignore", category=UserWarning)
     failed = []
-    for model in ["yolov8s_GD_FMF_x" for _ in range(6)] + ["yolov8s_GD_FMF_xi" for _ in range(6)]:
+    for model in ["yolov8s_GD_FMF_EUCB" for _ in range(3)]:
         try:
             main(model_type=model, __debug=None)
         except Exception as e:
