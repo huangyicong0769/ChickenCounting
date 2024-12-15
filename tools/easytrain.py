@@ -352,7 +352,7 @@ def main(model_type, __debug=None):
 if __name__ == "__main__":
     warnings.filterwarnings("ignore", category=UserWarning)
     failed = []
-    for model in ["yolov8s_GD_DFF_FMF" for _ in range(3)] + ["yolov8s_GD_CGAFusion_FMF" for _ in range(3)]:
+    for model in ["yolov8s_GD_EFF" for _ in range(3)]:
         try:
             main(model_type=model, __debug=None)
         except Exception as e:
