@@ -17,10 +17,10 @@ meta_params={
     
     # Default Hyperparameters
     'optimizer': 'auto',
-    'lr0': 0.001,
+    'lr0': 0.001429,
     'lrf': 0.01,
-    'momentum': 0.937,
-    'weight_decay': 0.0005,
+    'momentum': 0.9,
+    'weight_decay': 0.0004765625,
     'warmup_epochs': 3.0,
     'warmup_momentum': 0.8,
     'box': 7.5,
@@ -352,7 +352,7 @@ def main(model_type, __debug=None):
 if __name__ == "__main__":
     warnings.filterwarnings("ignore", category=UserWarning)
     failed = []
-    for model in ["yolov8s_GD_CAFM" for _ in range(3)]:
+    for model in ["yolov8s_GD_CAFM_DySample" for _ in range(3)]:
         try:
             main(model_type=model, __debug=None)
         except Exception as e:
