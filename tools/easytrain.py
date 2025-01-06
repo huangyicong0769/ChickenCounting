@@ -5,7 +5,7 @@ from ultralytics import YOLO
 
 meta_params={
     'data': './data/data.yaml',
-    'epochs': 120, 
+    'epochs': 200, 
     'batch': 0.85,
     'cache': True, 
     'project': f'ChickenCounting', 
@@ -13,7 +13,8 @@ meta_params={
     'patience': 0,
     'iou_type': 'CIoU',
     'close_mosaic': 0,
-    'pretrained': True,
+    'pretrained': False,
+    'spname': '_SoftNMS',
     
     # Default Hyperparameters
     'optimizer': 'auto',
@@ -42,6 +43,7 @@ meta_params={
     'copy_paste': 0.0,
     'ki': 575.0,
     'kd': 50.0,
+    'soft_nms': True,
 }
 
 hyp_params={
@@ -303,7 +305,7 @@ def main(model_type, __debug=None):
     else:
         model = YOLO(model_type+".yaml").load(f"ChickenCounting/{model_type}_100e_coco/weights/last.pt")
     # params['optimizer'] = 'CAdamW'
-    params['name'] = f"{model_type}_{params['epochs']}e{"_cocopt" if params['pretrained'] else ""}_"
+    params['name'] = f"{model_type}_{params['epochs']}e{"_cocopt" if params['pretrained'] else ""}{params['spname']}_"
     
     if __debug == True:
         return params['name']
@@ -352,7 +354,7 @@ def main(model_type, __debug=None):
 if __name__ == "__main__":
     warnings.filterwarnings("ignore", category=UserWarning)
     failed = []
-    for model in ["yolov8s_GD_CAFM_FMF_AConv"]:
+    for model in ["yolov8s_GD_CAFM_FMF_AConv" for _ in range(3)]:
         try:
             main(model_type=model, __debug=None)
         except Exception as e:
